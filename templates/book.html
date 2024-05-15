@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='book.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div id="logo">
+        <a href="index.html">
+            <img src="{{ url_for('static', filename='images/bookly.png') }}" alt="logo">
+        </a>
+        
+        <div class="btn-group btn-group-lg" style="position: relative; bottom: 89px; left: 20%;" role="group" aria-label="Basic example">
+            <a href="logged.html"><button type="button" class="btn btn-warning" style="background-color: rgba(235, 207, 70, 0.7);">Home</button></a>
+            <a href="index.html"><button type="button" class="btn btn-warning" style="background-color: rgba(235, 207, 70, 0.7);">Logout</button></a>
+            <a href="#contact"><button type="button" class="btn btn-warning" style="background-color: rgba(235, 207, 70, 0.7);">Contact us</button></a>
+        </div>
+
+        <form class="form-inline my-2 my-lg-0" action="{{ url_for('search') }}" method="POST">
+            <input class="form-control mr-sm-2" name="the-search" type="search" placeholder="Search by Title, Author or year" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+    </br></br></br>
+    <header class="title">{{ title }}</header>
+    <div class="container">
+        <div class="info">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">ISBN (Goodreads special id for a book): {{ book.isbn }}</li>
+                <li class="list-group-item">Title: {{ book.title }} </li>
+                <li class="list-group-item">Author: {{ book.author }} </li>
+                <li class="list-group-item">Publication Year: {{ book.year }}</li>
+            </ul>
+        </div>
+
+        <div class="rating">
+            <header class="goodreads"></header>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">The number of ratings(on Goodreads): {{ res["books"][0]["ratings_count"] }} </li>
+                <li class="list-group-item">Average rating:  {{ res["books"][0]["average_rating"] }} </li>
+                <li class="list-group-item">
+                    <span class="Rate">Your rating from 0 to 10:</span></br>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <form action="{{ url_for('book', title=book.title) }}" method="POST">
+                            <input name="rating" type="number" placeholder="Your ratings" min="0" max="10" style="width: 150%;" pattern="{1,2}">
+                            <button type="submit" class="btn btn-warning">Submit</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="reviews">
+            <header style="font-size: 30px;">Reviews</header>
+            <ul class="list-group list-group-flush">
+                {% for i in reviews %}
+                    <li class="list-group-item">{{ i.review }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="review">
+            <div class="form-group">
+                <span style="color:red; font-size:20px;">{{ error }}</span>
+                <form action="{{ url_for('book', title=book.title) }}" method="POST">
+                    <textarea name="the-review" placeholder="Your review(each user is given one review per book)" maxlength="180" rows="6" cols="30" required></textarea>
+                    <button type="submit" style="position: relative; left: 150px;" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</br></br></br></br>
+<div class="screen-bottom">
+    <div class="goodreads">
+        <span class="goodreads-header">Goodreads API</span></br>
+        This website is built using the Goodreads API, wich provides</br>
+        a great library of books along with a huge amount of reviews, authors and a lot of other things</br>
+        which makes life easier for devellopers who are looking for a books databse, check their website <a href="" style="color: rgb(79, 80,79);">FROM HERE</a>
+    </div>
+    <div class="contact-us" id="contact">
+        <form>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Contact us</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </br>
+                <button class="btn btn-light">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='book.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div id="logo">
+        <a href="index.html">
+            <img src="{{ url_for('static', filename='images/bookly.png') }}" alt="logo">
+        </a>
+        
+        <div class="btn-group btn-group-lg" style="position: relative; bottom: 60px; left: 20%;" role="group" aria-label="Basic example">
+            <a href="logged.html"><button type="button" class="btn btn-warning" style="background-color: rgba(235, 207, 70, 0.7);">Home</button></a>
+            <a href="{{ url_for('logout') }}"><button type="button" class="btn btn-warning" style="background-color: rgba(235, 207, 70, 0.7);">Logout</button></a>
+            <a href="#contact"><button type="button" class="btn btn-warning" style="background-color: rgba(235, 207, 70, 0.7);">Contact us</button></a>
+        </div>
+
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" name="the-search" type="search" placeholder="Search by Title, Author or year" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <div class="info">
+            <ul class="list-group list-group-flush">
+                {% for book in books %}
+                    <li class="list-group-item">ISBN (Goodreads special id for a book): {{ book.isbn }}</li>
+                    <li class="list-group-item">Title: {{ book.title }} </li>
+                    <li class="list-group-item">Author: {{ book.author }} </li>
+                    <li class="list-group-item">Publication Year: {{ book.year }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

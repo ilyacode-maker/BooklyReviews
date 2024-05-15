@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>error</title>
+</head>
+<body>
+    <h1>error</h1>
+    <ul>
+        {% for review in error %}
+            <li>{{ review.isbn }}</li>
+            <li>{{ review.author }}</li>
+            <li>{{ review.year }}</li>
+            <li>{{ review.title  }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
